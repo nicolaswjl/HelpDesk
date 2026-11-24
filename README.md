@@ -48,9 +48,19 @@ Na pasta `backend`, com o ambiente virtual ativado:
 Os testes cobrem autenticação, limitação de tentativas de login, isolamento dos chamados por usuário, comentários, histórico, atribuição, permissões de técnico, conclusão por administrador, ativação de contas, busca/paginação e não exposição de dados sensíveis.
 
 ## Perfis e regras
-- **Solicitante:** cria chamados, consulta somente os próprios e comenta em chamados não concluídos.
-- **Técnico:** consulta chamados, assume chamados sem responsável e atualiza o status dos chamados atribuídos a ele, respeitando as transições permitidas. Não pode concluir nem alterar chamados concluídos.
-- **Administrador:** consulta todos os chamados, atribui/revoga responsáveis, gerencia perfis e ativação de contas, cadastra categorias e conclui chamados. O sistema impede remover ou desativar o último administrador ativo e a própria conta do administrador logado.
+
+- **Solicitante:** cria chamados, consulta somente os próprios chamados e pode adicionar comentários enquanto eles não estiverem concluídos.
+- **Técnico:** consulta os chamados, assume chamados sem responsável e atualiza o status dos chamados atribuídos a ele. Pode alterar o status para Em andamento, Aguardando e Concluído, finalizando o atendimento após resolver o problema.
+- **Administrador (gerente):** possui acesso a todos os chamados, pode atribuir e remover responsáveis, gerenciar perfis e ativar ou desativar contas, cadastrar categorias e concluir chamados. Também possui acesso às funcionalidades administrativas do sistema.
+
+### Fluxo de status dos chamados
+
+1. **Aberto:** chamado recém-criado.
+2. **Em andamento:** atendimento iniciado pelo técnico.
+3. **Aguardando:** atendimento aguardando informações ou alguma ação.
+4. **Concluído:** problema resolvido e atendimento finalizado.
+
+Após a conclusão, o chamado permanece disponível para consulta no histórico.
 
 ## Endpoints principais
 - `POST /auth/register`, `POST /auth/login`, `GET /auth/me`
